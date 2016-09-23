@@ -53,13 +53,12 @@ namespace Recommendations
 
             try
             {
-                if (String.IsNullOrEmpty(AccountKey))
+                while (String.IsNullOrEmpty(AccountKey))
                 {
                     Console.WriteLine("In order to use this sample, you need to get have an Account Key for the Recommendations Cognitive Service.");
                     Console.WriteLine("You can get one from the Azure Management Portal (http://go.microsoft.com/fwlink/?LinkId=761106)");
                     Console.WriteLine("Please enter your Recommendations API Account key:");
                     AccountKey = Console.ReadLine();
-                    return;
                 }
 
                 recommender = new RecommendationsApiWrapper(AccountKey, BaseUri);
