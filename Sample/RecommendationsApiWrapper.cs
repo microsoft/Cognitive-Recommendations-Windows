@@ -28,7 +28,7 @@
             _httpClient = new HttpClient
             {
                 BaseAddress = new Uri(BaseUri),
-                Timeout = TimeSpan.FromMinutes(5),
+                Timeout = TimeSpan.FromMinutes(15),
                 DefaultRequestHeaders =
                 {
                     {"Ocp-Apim-Subscription-Key", accountKey}
