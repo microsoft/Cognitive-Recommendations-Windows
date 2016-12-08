@@ -23,7 +23,7 @@ If you have not done so already, you will need to sign up for the Recommendation
 
 ## Buiding the Sample
 First of all, provide your API key to the application by passing it as command-line parameters.
-Right click on the solution and click on **Properties**. 
+Right click on the project and click on **Properties**. 
 On **Properties**, go to **Debug**, and then on **Command line arguments** enter the API key. You may choose to modify the code so this information is part of the code instead of reading from the command line. 
 
 ## Description
