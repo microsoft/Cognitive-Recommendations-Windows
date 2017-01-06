@@ -1,4 +1,4 @@
-﻿namespace Recommendations
+namespace Recommendations
 {
     using System;
     using System.IO;
@@ -332,16 +332,25 @@
         /// Get Item to Item (I2I) Recommendations or Frequently-Bought-Together (FBT) recommendations
         /// </summary>
         /// <param name="modelId">The model identifier.</param>
-        /// <param name="buildId">The build identifier.</param>
+        /// <param name="buildId">The build identifier. Set to null if you want to use active build</param>
         /// <param name="itemIds"></param>
         /// <param name="numberOfResults"></param>
         /// <returns>
         /// The recommendation sets. Note that I2I builds will only return one item per set.
         /// FBT builds will return more than one item per set.
         /// </returns>
-        public RecommendedItemSetInfoList GetRecommendations(string modelId, long buildId, string itemIds, int numberOfResults)
+        public RecommendedItemSetInfoList GetRecommendations(string modelId, long? buildId, string itemIds, int numberOfResults)
         {
-            string uri = BaseUri + "/models/" + modelId + "/recommend/item?itemIds=" + itemIds + "&numberOfResults=" + numberOfResults + "&minimalScore=0";
+
+            string uri = BaseUri + "/models/" + modelId + "/recommend/item?itemIds=" + itemIds +
+                "&numberOfResults=" + numberOfResults + "&minimalScore=0";
+
+            //Set active build if passed.
+            if (buildId != null)
+            {
+                uri = uri + "&buildId=" + buildId;
+            }
+
             var response = _httpClient.GetAsync(uri).Result;
 
             if (!response.IsSuccessStatusCode)
@@ -361,13 +370,20 @@
         /// The user history is extracted from the usage files used to train the model.
         /// </summary>
         /// <param name="modelId">The model identifier.</param>
-        /// <param name="buildId">The build identifier.</param>
+        /// <param name="buildId">The build identifier. Set to null to use active build.</param>
         /// <param name="userId">The user identifier.</param>
         /// <param name="numberOfResults">Desired number of recommendation results.</param>
         /// <returns>The recommendations for the user.</returns>
-        public RecommendedItemSetInfoList GetUserRecommendations(string modelId, long buildId, string userId, int numberOfResults)
+        public RecommendedItemSetInfoList GetUserRecommendations(string modelId, long? buildId, string userId, int numberOfResults)
         {
             string uri = BaseUri + "/models/" + modelId + "/recommend/user?userId=" + userId + "&numberOfResults=" + numberOfResults;
+
+            //Set active build if passed.
+            if (buildId != null)
+            {
+                uri = uri + "&buildId=" + buildId;
+            }
+
             var response = _httpClient.GetAsync(uri).Result;
 
             if (!response.IsSuccessStatusCode)
